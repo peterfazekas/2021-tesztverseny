@@ -26,12 +26,20 @@ public class App {
 
     private void run() {
         System.out.println("1. feladat: Az adatok beolvasása");
-        System.out.println("2. feladat: A vetélkedőn "
-                + service.countCompetitors() + " versenyző indult.");
+        int countCompetitors = service.countCompetitors();
+        System.out.println("2. feladat: A vetélkedőn " + countCompetitors + " versenyző indult.");
         System.out.print("3. feladat: A versenyző azonosítója = ");
         String id = console.read();
         System.out.println(service.getAnswersById(id) + "\t(a versenyző válasza)");
         System.out.println("4. feladat");
         System.out.println(service.getCorrectAnswers() + "\t(a helyes megoldás)");
+        System.out.println(service.getCheckedResultById(id)
+                + "\t(a versenyző helyes válaszai)");
+        System.out.print("5. feladat: A feladat sorszáma = ");
+        int taskId = console.readInt() - 1;
+        long correctAnswersByTaskId = service.countCorrectAnswersByTaskId(taskId);
+        System.out.printf("A feladatra %d fő, a versenyzők %5.2f%%-a adott helyes választ.",
+                correctAnswersByTaskId, correctAnswersByTaskId * 100.0 / countCompetitors);
+        System.out.println(service.printScores());
     }
 }
